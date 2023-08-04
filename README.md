@@ -1,1 +1,1 @@
-# Reference project for Story Points score formation
+# React users
