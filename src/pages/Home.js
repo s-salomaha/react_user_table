@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { JsonServerContext } from "../context/jsonServer/jsonServerContext";
 import { Loader } from "../components/Loader";
-import { Table } from "../components/Table";
+import { UsersTable } from "../components/UsersTable";
 
 export const Home = () => {
   const { loading, users, fetchUsers } = useContext(JsonServerContext);
@@ -16,7 +16,7 @@ export const Home = () => {
       {loading
         ? <Loader />
         : users.length
-          ? <Table users={users} />
+          ? <UsersTable users={users} />
           : <div>Еhe list of users is empty</div>
       }
     </>
