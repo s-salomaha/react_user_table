@@ -1,0 +1,32 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Otto",
+      "email": "otto@gmail.com",
+      "birthdate": "01.07.2003",
+      "phone": "+1 999 000 00 01"
+    },
+    {
+      "id": 2,
+      "name": "Jacob",
+      "email": "thornton@gmail.com",
+      "birthdate": "02.07.2003",
+      "phone": "+1 999 000 00 02"
+    },
+    {
+      "id": 3,
+      "name": "Larry the Bird",
+      "email": "larry_bird@gmail.com",
+      "birthdate": "03.07.2003",
+      "phone": "+1 999 000 00 03"
+    },
+    {
+      "id": 4,
+      "name": "",
+      "email": "",
+      "birthdate": "",
+      "phone": ""
+    }
+  ]
+}
