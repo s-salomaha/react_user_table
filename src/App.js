@@ -1,18 +1,22 @@
 import React from "react";
-import './App.css';
 import { Navbar } from "./components/Navbar";
-import { Table } from "./components/Table";
+import { AlertState } from "./context/alert/AlertState";
+import { JsonServerState } from "./context/jsonServer/JsonServerState";
+import { Alert } from "./components/Alert";
+import { Home } from "./pages/Home";
+import "./App.css";
 
 function App() {
   return (
-    <>
-      <Navbar />
-      <div className="container pt-4">
-        <h1 className="mb-5">Users:</h1>
-        <Table />
-        <button type="button" className="btn btn-primary mt-4">Add new user</button>
-      </div>
-    </>
+    <AlertState>
+      <JsonServerState>
+        <Navbar />
+        <div className="container pt-4">
+          <Alert />
+          <Home />
+        </div>
+      </JsonServerState>
+    </AlertState>
   );
 }
 
