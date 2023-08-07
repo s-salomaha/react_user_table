@@ -11,7 +11,7 @@ function App() {
     <AlertState>
       <JsonServerState>
         <Navbar />
-        <div className="container pt-4">
+        <div className="container py-5">
           <Alert />
           <Home />
         </div>

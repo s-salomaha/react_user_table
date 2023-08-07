@@ -1,7 +1,7 @@
 import React, {useState, useContext} from 'react';
 import { AlertContext } from '../context/alert/alertContext';
 import { JsonServerContext } from "../context/jsonServer/jsonServerContext";
-import { UserRow } from "./UserRow";
+import { UserForm } from "./UserForm";
 
 export const NewUserForm = () => {
   const [value, setValue] = useState('');
@@ -19,6 +19,8 @@ export const NewUserForm = () => {
   };
 
   return (
-    <UserRow newUser="true" />
+    <div className="table-responsive border secondary-subtle rounded-1 px-4 py-3">
+      <UserForm newUser="true" />
+    </div>
   );
 };
