@@ -25,26 +25,18 @@ export const JsonServerState = ({children}) => {
   };
 
   const removeUser = async (id, name) => {
-    await axios.delete(`${url}/users/${id}`);
+    try {
+      await axios.delete(`${url}/users/${id}`);
 
-    dispatch({
-      type: 'REMOVE_USER',
-      payload: id
-    });
+      dispatch({
+        type: 'REMOVE_USER',
+        payload: id
+      });
 
-    if (name) alert.show(`User "${name}" was deleted`, 'success');
-    // try {
-    //   await axios.delete(`${url}/users/${id}`);
-    //
-    //   dispatch({
-    //     type: 'REMOVE_USER',
-    //     payload: id
-    //   });
-    //
-    //   if (name) alert.show(`User "${name}" was deleted`, 'success');
-    // } catch (error) {
-    //   console.error(error);
-    // }
+      if (name) alert.show(`User "${name}" was deleted`, 'success');
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   const resetUserTableToDefault = async (users) => {
@@ -90,6 +82,20 @@ export const JsonServerState = ({children}) => {
     }
   }
 
+  const updateUser = async (userData) => {
+    try {
+      await axios.put(`${url}/users/${userData.id}`, userData);
+      const payload = {
+        ...userData
+      };
+
+      dispatch({type: 'UPDATE_USER', payload});
+      alert.show(`User "${userData.name}" was updated`, 'success');
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
   const initialState = {
     users: [],
     loading: false,
@@ -107,6 +113,7 @@ export const JsonServerState = ({children}) => {
       removeUser,
       resetUserTableToDefault,
       addUser,
+      updateUser,
       loading: state.loading,
       users: state.users
     }}>

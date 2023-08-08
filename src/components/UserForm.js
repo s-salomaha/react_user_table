@@ -6,9 +6,16 @@ export const UserForm = ({ user, newUser = false }) => {
   const { register, formState: { errors }, handleSubmit } = useForm({
     reValidateMode: 'onSubmit'
   });
-  const { removeUser, addUser } = useContext(JsonServerContext);
+  const { removeUser, addUser, updateUser } = useContext(JsonServerContext);
   const onSubmit = (data) => {
-    addUser(data);
+    const isUpdating = !!data.id;
+
+    if (isUpdating) {
+      updateUser(data);
+    } else {
+      addUser(data);
+    }
+    console.log(data);
   }
 
   return (
