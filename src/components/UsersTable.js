@@ -1,10 +1,30 @@
 import { UserForm } from "./UserForm";
+import React, { useContext } from "react";
+import { JsonServerContext } from "../context/jsonServer/jsonServerContext";
 
 export const UsersTable = ({ users }) => {
+  const { resetUserTableToDefault } = useContext(JsonServerContext);
+
   return (
-    <div className="table-responsive border secondary-subtle rounded-1 p-3">
-      <table className="table table-striped align-middle mb-0">
-        <thead>
+    <>
+      <div className="row my-4">
+        <div className="col-12">
+          <h2>Users:</h2>
+        </div>
+        <div className="col-12">
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={() => resetUserTableToDefault(users)}
+          >
+            Reset the user table to default
+          </button>
+        </div>
+      </div>
+
+      <div className="table-responsive border secondary-subtle rounded-1 p-3">
+        <table className="table table-striped align-middle mb-0">
+          <thead>
           <tr>
             <th>
               <div className="row">
@@ -17,8 +37,8 @@ export const UsersTable = ({ users }) => {
               </div>
             </th>
           </tr>
-        </thead>
-        <tbody>
+          </thead>
+          <tbody>
           {users.map(user => (
             <tr key={user.id}>
               <td>
@@ -26,8 +46,9 @@ export const UsersTable = ({ users }) => {
               </td>
             </tr>
           ))}
-        </tbody>
-      </table>
-    </div>
+          </tbody>
+        </table>
+      </div>
+    </>
   )
 };

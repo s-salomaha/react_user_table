@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { useContext, useReducer } from "react";
 import axios from "axios";
 import { JsonServerContext } from "./jsonServerContext";
 import { jsonServerReducer } from "./jsonServerReducer";
@@ -13,12 +13,7 @@ export const JsonServerState = ({children}) => {
 
     if (!res.data) res.data = {};
 
-    const payload = Object.keys(res.data).map(key => {
-      return {
-        ...res.data[key],
-        id: key
-      }
-    });
+    const payload = res.data;
 
     dispatch({type: "FETCH_USERS", payload});
   };
@@ -31,10 +26,38 @@ export const JsonServerState = ({children}) => {
       payload: id
     });
 
-    alert.show(`User "${name}" was deleted`, 'success');
+    if (name) alert.show(`User "${name}" was deleted`, 'success');
   }
 
-  const addUser = async (userData) => {
+  const resetUserTableToDefault = (users) => {
+    users.map(user => removeUser(user.id));
+
+    const newUsers = [
+      {
+        "name": "Otto",
+        "email": "otto@gmail.com",
+        "birthdate": "2003-07-01",
+        "phone": "+1 999 000 00 01"
+      },
+      {
+        "name": "Jacob",
+        "email": "thornton@gmail.com",
+        "birthdate": "2001-05-02",
+        "phone": "+1 999 000 00 02"
+      },
+      {
+        "name": "Larry the Bird",
+        "email": "larry_bird@gmail.com",
+        "birthdate": "2004-11-03",
+        "phone": "+1 999 000 00 03"
+      }
+    ];
+
+    newUsers.map(user => addUser(user, true));
+    alert.show(`The table was reset to default`, 'success');
+  }
+
+  const addUser = async (userData, withoutAlert = false) => {
     try {
       const res = await axios.post(`//localhost:5000/users/`, userData);
       const payload = {
@@ -43,7 +66,7 @@ export const JsonServerState = ({children}) => {
       };
 
       dispatch({type: 'ADD_USER', payload});
-      alert.show(`User "${userData.name}" was added`, 'success');
+      if (!withoutAlert) alert.show(`User "${userData.name}" was added`, 'success');
     } catch (e) {
       throw new Error(e.message);
     }
@@ -64,6 +87,7 @@ export const JsonServerState = ({children}) => {
       showLoader,
       fetchUsers,
       removeUser,
+      resetUserTableToDefault,
       addUser,
       loading: state.loading,
       users: state.users
