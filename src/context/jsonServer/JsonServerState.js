@@ -8,29 +8,37 @@ export const JsonServerState = ({children}) => {
   const alert = useContext(AlertContext);
 
   const fetchUsers = async () => {
-    showLoader();
-    const res = await axios.get('//localhost:5000/users/');
+    try {
+      showLoader();
+      const res = await axios.get('//localhost:5000/users/');
 
-    if (!res.data) res.data = {};
+      if (!res.data) res.data = {};
 
-    const payload = res.data;
+      const payload = res.data;
 
-    dispatch({type: "FETCH_USERS", payload});
+      dispatch({type: "FETCH_USERS", payload});
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const removeUser = async (id, name) => {
-    await axios.delete(`//localhost:5000/users/${id}`);
+    try {
+      await axios.delete(`//localhost:5000/users/${id}`);
 
-    dispatch({
-      type: 'REMOVE_USER',
-      payload: id
-    });
+      dispatch({
+        type: 'REMOVE_USER',
+        payload: id
+      });
 
-    if (name) alert.show(`User "${name}" was deleted`, 'success');
+      if (name) alert.show(`User "${name}" was deleted`, 'success');
+    } catch (error) {
+      console.error(error);
+    }
   }
 
-  const resetUserTableToDefault = (users) => {
-    users.map(user => removeUser(user.id));
+  const resetUserTableToDefault = async (users) => {
+    await Promise.all(users.map(user => removeUser(user.id)));
 
     const newUsers = [
       {
@@ -53,7 +61,7 @@ export const JsonServerState = ({children}) => {
       }
     ];
 
-    newUsers.map(user => addUser(user, true));
+    await Promise.all(newUsers.map(user => addUser(user, true)));
     alert.show(`The table was reset to default`, 'success');
   }
 
@@ -68,7 +76,7 @@ export const JsonServerState = ({children}) => {
       dispatch({type: 'ADD_USER', payload});
       if (!withoutAlert) alert.show(`User "${userData.name}" was added`, 'success');
     } catch (e) {
-      throw new Error(e.message);
+      console.error(e);
     }
   }
 

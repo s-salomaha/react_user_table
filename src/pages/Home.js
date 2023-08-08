@@ -15,14 +15,12 @@ export const Home = () => {
     <>
       {loading
         ? <Loader />
-        : users.length
-          ? (
-              <>
-                <NewUserForm />
-                <UsersTable users={users} />
-              </>
-            )
-          : <div>Еhe list of users is empty</div>
+        : (
+            <>
+              <NewUserForm />
+              <UsersTable users={users} />
+            </>
+          )
       }
     </>
   );
