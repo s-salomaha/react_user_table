@@ -6,7 +6,8 @@ import { AlertContext } from "../alert/alertContext";
 
 export const JsonServerState = ({children}) => {
   const alert = useContext(AlertContext);
-  const url = '//localhost:5000';
+  const IS_DEV = process.env.NODE_ENV === "development";
+  const url = IS_DEV ? "//localhost:5000" : "https://react-user-table-chi.vercel.app";
 
   const fetchUsers = async () => {
     try {
@@ -24,18 +25,26 @@ export const JsonServerState = ({children}) => {
   };
 
   const removeUser = async (id, name) => {
-    try {
-      await axios.delete(`${url}/users/${id}`);
+    await axios.delete(`${url}/users/${id}`);
 
-      dispatch({
-        type: 'REMOVE_USER',
-        payload: id
-      });
+    dispatch({
+      type: 'REMOVE_USER',
+      payload: id
+    });
 
-      if (name) alert.show(`User "${name}" was deleted`, 'success');
-    } catch (error) {
-      console.error(error);
-    }
+    if (name) alert.show(`User "${name}" was deleted`, 'success');
+    // try {
+    //   await axios.delete(`${url}/users/${id}`);
+    //
+    //   dispatch({
+    //     type: 'REMOVE_USER',
+    //     payload: id
+    //   });
+    //
+    //   if (name) alert.show(`User "${name}" was deleted`, 'success');
+    // } catch (error) {
+    //   console.error(error);
+    // }
   }
 
   const resetUserTableToDefault = async (users) => {
