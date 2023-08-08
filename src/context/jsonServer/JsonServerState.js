@@ -6,11 +6,12 @@ import { AlertContext } from "../alert/alertContext";
 
 export const JsonServerState = ({children}) => {
   const alert = useContext(AlertContext);
+  const url = '//localhost:5000';
 
   const fetchUsers = async () => {
     try {
       showLoader();
-      const res = await axios.get('//localhost:5000/users/');
+      const res = await axios.get(`${url}/users/`);
 
       if (!res.data) res.data = {};
 
@@ -24,7 +25,7 @@ export const JsonServerState = ({children}) => {
 
   const removeUser = async (id, name) => {
     try {
-      await axios.delete(`//localhost:5000/users/${id}`);
+      await axios.delete(`${url}/users/${id}`);
 
       dispatch({
         type: 'REMOVE_USER',
@@ -67,7 +68,7 @@ export const JsonServerState = ({children}) => {
 
   const addUser = async (userData, withoutAlert = false) => {
     try {
-      const res = await axios.post(`//localhost:5000/users/`, userData);
+      const res = await axios.post(`${url}/users/`, userData);
       const payload = {
         ...userData,
         id: res.data.id

@@ -9,6 +9,7 @@ export const Home = () => {
 
   useEffect(() => {
     fetchUsers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
