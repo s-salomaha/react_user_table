@@ -4,7 +4,6 @@ import { AlertState } from "./context/alert/AlertState";
 import { JsonServerState } from "./context/jsonServer/JsonServerState";
 import { Alert } from "./components/Alert";
 import { Home } from "./pages/Home";
-import "./App.css";
 
 function App() {
   return (
