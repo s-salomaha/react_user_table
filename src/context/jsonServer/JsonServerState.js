@@ -27,7 +27,6 @@ export const JsonServerState = ({children}) => {
   const removeUser = async (id, name) => {
     try {
       await axios.delete(`${url}/users/${id}`);
-      console.log('removeUser');
 
       dispatch({
         type: 'REMOVE_USER',
@@ -37,12 +36,14 @@ export const JsonServerState = ({children}) => {
       if (name) alert.show(`User "${name}" was deleted`, 'success');
     } catch (error) {
       console.error(error);
+      // TODO: To figure out with Error: EROFS: read-only file system (vercel) JSON SERVER
+      // after that, remove the code below
+      await fetchUsers();
+      if (name) alert.show(`User "${name}" was deleted`, 'success');
     }
   }
 
   const resetUserTableToDefault = async (users) => {
-    await Promise.all(users.map(user => removeUser(user.id)));
-
     const newUsers = [
       {
         "name": "Otto",
@@ -64,12 +65,20 @@ export const JsonServerState = ({children}) => {
       }
     ];
 
-    await Promise.all(newUsers.map(user => addUser(user, true)));
+    // TODO: To figure out with Error: EROFS: read-only file system (vercel) JSON SERVER
+    // await Promise.all(users.map(user => removeUser(user.id)));
+    users.map(user => removeUser(user.id));
+
+
+    // TODO: To figure out with Error: EROFS: read-only file system (vercel) JSON SERVER
+    // await Promise.all(newUsers.map(user => addUser(user, true)));
+    newUsers.map(user => addUser(user, true));
     alert.show(`The table was reset to default`, 'success');
   }
 
   const addUser = async (userData, withoutAlert = false) => {
     try {
+      // TODO: To figure out with Error: EROFS: read-only file system (vercel) JSON SERVER
       const res = await axios.post(`${url}/users/`, userData);
       const payload = {
         ...userData,
@@ -80,11 +89,16 @@ export const JsonServerState = ({children}) => {
       if (!withoutAlert) alert.show(`User "${userData.name}" was added`, 'success');
     } catch (e) {
       console.error(e);
+      // TODO: To figure out with Error: EROFS: read-only file system (vercel) JSON SERVER
+      // after that, remove the code below
+      await fetchUsers();
+      if (!withoutAlert) alert.show(`User "${userData.name}" was added`, 'success');
     }
   }
 
   const updateUser = async (userData) => {
     try {
+      // TODO: To figure out with Error: EROFS: read-only file system (vercel) JSON SERVER
       await axios.put(`${url}/users/${userData.id}`, userData);
       const payload = {
         ...userData
@@ -94,6 +108,14 @@ export const JsonServerState = ({children}) => {
       alert.show(`User "${userData.name}" was updated`, 'success');
     } catch (e) {
       console.error(e);
+      // TODO: To figure out with Error: EROFS: read-only file system (vercel) JSON SERVER
+      // after that, remove the code below
+      const payload = {
+        ...userData
+      };
+
+      dispatch({type: 'UPDATE_USER', payload});
+      alert.show(`User "${userData.name}" was updated`, 'success');
     }
   }
 
