@@ -18,9 +18,7 @@ export const Home = () => {
         : users.length
           ? (
               <>
-                <h2 className="mb-4">Add a new user:</h2>
                 <NewUserForm />
-                <h2 className="my-4">Users:</h2>
                 <UsersTable users={users} />
               </>
             )

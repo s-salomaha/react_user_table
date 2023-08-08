@@ -6,10 +6,9 @@ export const Alert = () => {
 
   return (
     <>
-      {alert.visible && (<div className={`alert alert-${alert.type || "warning"} alert-dismissible mb-4`}>
-        <strong>Внимание!</strong>
-        &nbsp;{alert.text}
-        <button onClick={hide} type="button" className="close" aria-label="Close">
+      {alert.visible && (<div className={`alert alert-${alert.type || "warning"} alert-dismissible d-flex mb-4`}>
+        <span className='pe-2 flex-grow-1'>{alert.text}</span>
+        <button onClick={hide} type="button" className="btn btn-light btn-sm" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>)}

@@ -7,6 +7,8 @@ export const jsonServerReducer = (state, action) => {
         ...state,
         users: action.payload, loading: false
       };
+    case 'ADD_USER':
+      return {...state, users: [...state.users, action.payload]};
     default:
       return state;
   }
