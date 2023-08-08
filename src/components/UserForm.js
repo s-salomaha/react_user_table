@@ -1,11 +1,13 @@
+import { useContext } from "react";
 import { useForm } from "react-hook-form";
+import { JsonServerContext } from "../context/jsonServer/jsonServerContext";
 
-export const UserForm = ({ user, newUser = false, handleChange = null }) => {
-  const { register, formState: { errors }, handleSubmit, setFocus, setValue } = useForm({
+export const UserForm = ({ user, newUser = false }) => {
+  const { register, formState: { errors }, handleSubmit } = useForm({
     reValidateMode: 'onSubmit'
   });
-
-  function onSubmit(data) {
+  const { removeUser } = useContext(JsonServerContext);
+  const onSubmit = (data) => {
     console.log('data', data);
   }
 
@@ -69,7 +71,13 @@ export const UserForm = ({ user, newUser = false, handleChange = null }) => {
           : (
               <>
                 <button type="submit" className="btn btn-success">Save</button>
-                <button type="submit" className="btn btn-danger ms-1">Delete</button>
+                <button
+                  type="button"
+                  className="btn btn-danger ms-1"
+                  onClick={() => removeUser(user.id, user.name)}
+                >
+                  Delete
+                </button>
               </>
             )
         }
