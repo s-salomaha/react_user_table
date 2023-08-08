@@ -26,7 +26,8 @@ export const JsonServerState = ({children}) => {
 
   const removeUser = async (id, name) => {
     try {
-      axios.delete(`${url}/users/${id}`);
+      await axios.delete(`${url}/users/${id}`);
+      console.log('removeUser');
 
       dispatch({
         type: 'REMOVE_USER',

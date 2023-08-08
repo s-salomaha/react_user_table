@@ -22,7 +22,7 @@
     "start": "env NODE_ENV=production concurrently --kill-others \"npm run server\" \"react-scripts start\"",
     "build": "react-scripts build",
     "server": "node api/server.js",
-    "server:watch": "json-server --watch tmp/db.json --port 5000",
+    "server:watch": "json-server --watch api/db.json --port 5000",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
